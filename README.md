@@ -1,1 +1,1 @@
-# Ecommerce-WebApp(Spring Boot Rest API and MySql)
+# Ecommerce-WebApp with Spring Boot backend and MySql Database
