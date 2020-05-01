@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Mart.JWTConfiguration.ShoppingConfiguration;
-import com.project.Mart.RequestResponse.ApiResponse;
-import com.project.Mart.models.AddtoCart;
 import com.project.Mart.models.Category;
 import com.project.Mart.models.Products;
 import com.project.Mart.services.ProductServicesImpl;

@@ -35,7 +35,7 @@ public class AddtoCartController {
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "Order not added to cart"));
 		}
 		
    }
@@ -56,7 +56,7 @@ public class AddtoCartController {
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "Quantity not updated"));
 		}
 		
    }
@@ -72,7 +72,7 @@ public class AddtoCartController {
 			List<AddtoCart> obj = cartService.removeCartByUserId(Long.parseLong(removeCartRequest.get("cartId")), Long.parseLong(removeCartRequest.get("userId")));
 			return ResponseEntity.ok(obj);
 		}catch(Exception e) {
-				return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+				return ResponseEntity.badRequest().body(new ApiResponse(false, "Quantity not removed"));
 		}		
    }
 	
@@ -85,7 +85,7 @@ public class AddtoCartController {
 			List<AddtoCart> obj = cartService.getCartByUserId(Long.parseLong(getCartRequest.get("userId")));
 			return ResponseEntity.ok(obj);
 		}catch(Exception e) {
-				return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+				return ResponseEntity.badRequest().body(new ApiResponse(false, "No products in cart"));
 		}	
    }
 }

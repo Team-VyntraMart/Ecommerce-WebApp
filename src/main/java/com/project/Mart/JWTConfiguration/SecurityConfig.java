@@ -21,6 +21,8 @@ import com.project.Mart.services.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
+		securedEnabled = true,
+        jsr250Enabled = true,
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -91,9 +93,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 	.permitAll()
-                .antMatchers("/api/status/**","/api/login/**","/api/signup/**","/api/product/**")
+                .antMatchers("/api/auth/**","/api/product/**")
                 	.permitAll()
-                .antMatchers(HttpMethod.GET, "/api/status/**")
+                .antMatchers(HttpMethod.GET, "/api/auth/status/**")
                 	.permitAll()
                 .antMatchers("/api/admin/**")
                 	.hasRole("ADMIN")

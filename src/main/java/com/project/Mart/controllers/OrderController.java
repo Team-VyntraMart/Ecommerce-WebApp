@@ -1,8 +1,6 @@
 package com.project.Mart.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Mart.JWTConfiguration.ShoppingConfiguration;
 import com.project.Mart.RequestResponse.ApiResponse;
-import com.project.Mart.models.AddtoCart;
-import com.project.Mart.models.CheckoutCart;
 import com.project.Mart.services.CartService;
 import com.project.Mart.services.ProductServicesImpl;
 
@@ -69,10 +64,10 @@ public class OrderController {
 		public ResponseEntity<?> getOrdersByUserId(@RequestBody HashMap<String,String> ordersRequest) {
 		try {
 			String keys[] = {"userId"};	
-			return ResponseEntity.ok(new ApiResponse("Order placed successfully", ""));
+			return ResponseEntity.ok(new ApiResponse(true,"Order placed successfully"));
 		}catch(Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "No orders placed"));
 		}
 		
 	}

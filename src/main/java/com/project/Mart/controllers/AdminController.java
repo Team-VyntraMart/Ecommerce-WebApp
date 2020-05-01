@@ -36,7 +36,7 @@ public class AdminController {
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "Product not inserted"));
 		}
 		
    }
@@ -53,7 +53,7 @@ public class AdminController {
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), ""));
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "Category not added"));
 		}
 		
    }
