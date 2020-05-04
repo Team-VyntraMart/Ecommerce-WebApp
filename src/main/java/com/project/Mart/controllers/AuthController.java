@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +26,17 @@ import com.project.Mart.models.RoleName;
 import com.project.Mart.models.User;
 import com.project.Mart.repositories.RoleRepository;
 import com.project.Mart.repositories.UserRepository;
+import com.project.Mart.user.UserPrincipal;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -54,7 +59,7 @@ public class AuthController {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
+                        loginRequest.getEmail(),
                         loginRequest.getPassword()
                 )
         );
@@ -62,7 +67,13 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        
+        UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();		
+		List<String> roles = userDetails.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,userDetails.getId(),userDetails.getName(), 
+        		userDetails.getUsername(), userDetails.getEmail(), roles));
     }
 
     @PostMapping("/signup")
