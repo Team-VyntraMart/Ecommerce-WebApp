@@ -36,12 +36,7 @@ public interface AddtoCartRepository extends JpaRepository<AddtoCart,Long> {
     @Transactional
 	@Query("DELETE  FROM AddtoCart addCart WHERE   addCart.user_id=:user_id")
 	void deleteAllCartByUserId(@Param("user_id")Long user_id);
-	
-	@Modifying
-    @Transactional
-	@Query("DELETE  FROM AddtoCart addCart WHERE addCart.user_id=:user_id")
-	void deleteAllCartUserId(@Param("user_id")Long user_id);
-	
+
 	@Modifying
     @Transactional
 	@Query("update AddtoCart addCart set addCart.qty=:qty WHERE addCart.id=:cart_id")

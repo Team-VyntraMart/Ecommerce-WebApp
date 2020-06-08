@@ -19,7 +19,7 @@ public class ProductServicesImpl implements ProductServices{
 	CategoryRepository cateRepo;
 	
 	@Override
-	public List<Products> addProducts(String name,String category_id,double price) throws Exception{
+	public List<Products> addProducts(String name,long category_id,double price) throws Exception{
 			Products obj = new Products();
 			obj.setName(name);
 			obj.setCategory_id(category_id);
@@ -42,7 +42,7 @@ public class ProductServicesImpl implements ProductServices{
 	}
 	
 	@Override
-	public List<Products>getProductsByCategory(String product_id){
+	public List<Products>getProductsByCategory(Long product_id){
 		return productRepo.getByCategoryId(product_id);
 	}
 	
@@ -54,5 +54,11 @@ public class ProductServicesImpl implements ProductServices{
 	@Override
 	public Products getProductsById(long productId) throws Exception {
 		return productRepo.findById(productId).orElseThrow(() ->new Exception("Product is not found"));
+	}
+
+	@Override
+	public List<Products> removeProductByCategoryIdAndProductId(Long product_id, Long category_id) {
+		productRepo.deleteProductByCategoryIdAndProductId(product_id, category_id);
+		return productRepo.getByCategoryId(category_id);
 	}
 }

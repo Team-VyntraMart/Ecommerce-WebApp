@@ -19,7 +19,8 @@ public class Products implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	long id;
-	String name, category_id;
+	Long category_id;
+	String name;
 	double price;
 	
 	@Column(nullable = false, updatable = false)
@@ -51,11 +52,10 @@ public class Products implements Serializable{
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public String getCategory_id() {
+	public Long getCategory_id() {
 		return category_id;
 	}
-	public void setCategory_id(String category_id) {
+	public void setCategory_id(Long category_id) {
 		this.category_id = category_id;
 	}
-	
 }

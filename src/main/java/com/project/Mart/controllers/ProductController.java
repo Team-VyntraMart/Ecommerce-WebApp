@@ -37,7 +37,7 @@ public class ProductController {
 	}
 	@RequestMapping("/getProductsByCategory")
 	public List<Products> getProductsByCategory(@RequestBody HashMap<String,String> request){
-		String category_id = request.get("cat_id");		
+		long category_id = Long.parseLong(request.get("cat_id"));		
 		return productServices.getProductsByCategory(category_id);
 	}
 	

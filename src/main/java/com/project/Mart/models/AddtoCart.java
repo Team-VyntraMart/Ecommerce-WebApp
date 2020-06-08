@@ -1,4 +1,4 @@
-package com.project.Mart.models;
+ package com.project.Mart.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -53,10 +53,6 @@ public class AddtoCart implements Serializable{
 		this.qty = qty;
 	}
 	
-	/*public void setPrice(double price) {
-		this.price = price;
-	}*/
-	
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -81,6 +77,5 @@ public class AddtoCart implements Serializable{
 	}
 	public double getPrice() {
 		return getQty()*product.getPrice();
-		//return product.getPrice();
 	}
 }

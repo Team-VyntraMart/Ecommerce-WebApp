@@ -32,7 +32,7 @@ public class AdminController {
 				
 			}
 			String name = addProductRequest.get("name"); 
-			String category_id =  addProductRequest.get("category_id"); 
+			long category_id =  Long.parseLong(addProductRequest.get("category_id")); 
 			double price =  Double.parseDouble(addProductRequest.get("price")); 
 			List<Products> obj = productServices.addProducts(name,category_id,price);
 			return ResponseEntity.ok(obj);
@@ -57,7 +57,20 @@ public class AdminController {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(new ApiResponse(false, "Category not added"));
 		}
-		
+    }
+	
+	@RequestMapping("/removeProduct")
+  	public ResponseEntity<?> removeProductwithProductId(@RequestBody HashMap<String,String> removeProductRequest) {
+		try {
+			String keys[] = {"product_id","category_id"};
+			if(ShoppingConfiguration.validationWithHashMap(keys, removeProductRequest)) {
+				
+			}
+			List<Products> obj = productServices.removeProductByCategoryIdAndProductId(Long.parseLong(removeProductRequest.get("product_id")), Long.parseLong(removeProductRequest.get("category_id")));
+			return ResponseEntity.ok(obj);
+		}catch(Exception e) {
+				return ResponseEntity.badRequest().body(new ApiResponse(false, "Product not removed"));
+		}		
    }
 
 }
