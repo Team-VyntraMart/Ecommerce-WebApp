@@ -1,14 +1,16 @@
 package com.project.Mart.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name="category")//have to add
+@Entity
+@Table(name="category", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "name"
+        })
+})
 public class Category {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
 	String name;

@@ -11,7 +11,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="products")
+@Table(name="products", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "name"
+        })
+})
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"added_on"}, 
         allowGetters = true)

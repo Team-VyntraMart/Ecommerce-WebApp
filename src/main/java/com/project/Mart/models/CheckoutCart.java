@@ -11,7 +11,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="checkout_cart")
+@Table(name="checkout_cart", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "order_id"
+        })
+})
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"order_date"}, 
         allowGetters = true)

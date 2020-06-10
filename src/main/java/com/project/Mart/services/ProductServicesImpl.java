@@ -2,6 +2,8 @@ package com.project.Mart.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,12 @@ public class ProductServicesImpl implements ProductServices{
 	CategoryRepository cateRepo;
 	
 	@Override
-	public List<Products> addProducts(String name,long category_id,double price) throws Exception{
+	public List<Products> addOrUpdateProducts(String name,long category_id,double price) throws Exception{
 			Products obj = new Products();
 			obj.setName(name);
 			obj.setCategory_id(category_id);
 			obj.setPrice(price);
-			productRepo.save(obj);		
+			productRepo.saveAndFlush(obj);		
 			return productRepo.getByCategoryId(category_id);
 	}
 	
@@ -57,8 +59,12 @@ public class ProductServicesImpl implements ProductServices{
 	}
 
 	@Override
-	public List<Products> removeProductByCategoryIdAndProductId(Long product_id, Long category_id) {
-		productRepo.deleteProductByCategoryIdAndProductId(product_id, category_id);
-		return productRepo.getByCategoryId(category_id);
+	public void deleteByProductId(Long id) {
+		productRepo.deleteById(id);
+	}
+
+	@Override
+	public void deleteByProductIdAndCategoryId(Long product_id, long category_id) {
+		productRepo.deleteProductByIdAndCategoryId(product_id, category_id);
 	}
 }

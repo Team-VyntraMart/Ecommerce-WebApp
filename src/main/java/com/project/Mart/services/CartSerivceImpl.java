@@ -52,12 +52,6 @@ public class CartSerivceImpl implements CartService {
 	}
 
 	@Override
-	public List<AddtoCart> removeCartByUserId(long cartId, long userId) {
-		addCartRepo.deleteCartByIdAndUserId(userId, cartId);
-		return this.getCartByUserId(userId);
-	}
-
-	@Override
 	public void updateQtyByCartId(long cartId, int qty) throws Exception {
 		addCartRepo.updateQtyByCartId(cartId,qty);
 	}
@@ -83,7 +77,7 @@ public class CartSerivceImpl implements CartService {
 			long user_id = tmp.get(0).getUser_id();
 			if(tmp.size() >0) {
 				checkOutRepo.saveAll(tmp);
-				this.removeAllCartByUserId(user_id);
+				this.deleteAllFromCart(user_id);
 				return this.getAllCheckoutByUserId(user_id);
 			}	
 			else {
@@ -96,9 +90,13 @@ public class CartSerivceImpl implements CartService {
 	}
 
 	@Override
-	public List<AddtoCart> removeAllCartByUserId(long userId) {
+	public void deleteProductFromCart(long id, long userId) {
+		addCartRepo.deleteCartByIdAndUserId(userId, id);
+	}
+
+	@Override
+	public void deleteAllFromCart(long userId) {
 		addCartRepo.deleteAllCartByUserId(userId);
-		return null;
 	}
 
 }

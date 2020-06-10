@@ -19,6 +19,6 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
 	
 	@Modifying
     @Transactional
-	@Query("DELETE FROM Products pro WHERE pro.id =:product_id and pro.category_id=:cat_id")
-	void deleteProductByCategoryIdAndProductId(@Param("product_id")Long id,@Param("cat_id")Long category_id);
+	@Query("DELETE  FROM Products pro WHERE pro.id =:product_id and pro.category_id=:cat_id")
+	void deleteProductByIdAndCategoryId(@Param("product_id")Long product_id,@Param("cat_id")Long cat_id);
 }

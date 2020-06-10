@@ -1,13 +1,21 @@
 package com.project.Mart.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Mart.RequestResponse.ApiResponse;
@@ -24,7 +32,7 @@ public class AdminController {
 	@Autowired
 	ProductServicesImpl productServices;
 	
-	@RequestMapping("/addProduct")
+	@PostMapping("/addProduct")
   	public ResponseEntity<?> addProduct(@RequestBody HashMap<String,String> addProductRequest) {
 		try {
 			String keys[] = {"name","category_id","price"};
@@ -34,14 +42,31 @@ public class AdminController {
 			String name = addProductRequest.get("name"); 
 			long category_id =  Long.parseLong(addProductRequest.get("category_id")); 
 			double price =  Double.parseDouble(addProductRequest.get("price")); 
-			List<Products> obj = productServices.addProducts(name,category_id,price);
+			List<Products> obj = productServices.addOrUpdateProducts(name,category_id,price);
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(new ApiResponse(false, "Product not inserted"));
 		}
-		
-   }
+	}
+	
+	@PutMapping("/addProduct")
+  	public ResponseEntity<?> updateProduct(@RequestBody HashMap<String,String> updateProductRequest) {
+		try {
+			String keys[] = {"name","category_id","price"};
+			if(ShoppingConfiguration.validationWithHashMap(keys, updateProductRequest)) {
+				
+			}
+			String name = updateProductRequest.get("name"); 
+			long category_id =  Long.parseLong(updateProductRequest.get("category_id")); 
+			double price =  Double.parseDouble(updateProductRequest.get("price")); 
+			List<Products> obj = productServices.addOrUpdateProducts(name,category_id,price);
+			return ResponseEntity.ok(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(new ApiResponse(false, "Product not updated"));
+		}
+	}
 	
 	@RequestMapping("/addCategory")
   	public ResponseEntity<?> addCategory(@RequestBody HashMap<String,String> addCategoryRequest) {
@@ -59,18 +84,16 @@ public class AdminController {
 		}
     }
 	
-	@RequestMapping("/removeProduct")
-  	public ResponseEntity<?> removeProductwithProductId(@RequestBody HashMap<String,String> removeProductRequest) {
-		try {
-			String keys[] = {"product_id","category_id"};
-			if(ShoppingConfiguration.validationWithHashMap(keys, removeProductRequest)) {
-				
-			}
-			List<Products> obj = productServices.removeProductByCategoryIdAndProductId(Long.parseLong(removeProductRequest.get("product_id")), Long.parseLong(removeProductRequest.get("category_id")));
-			return ResponseEntity.ok(obj);
-		}catch(Exception e) {
-				return ResponseEntity.badRequest().body(new ApiResponse(false, "Product not removed"));
-		}		
-   }
+	@RequestMapping(value = "/deleteProduct/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+		productServices.deleteByProductId(id);
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/deleteProduct/{cat_id}/{pro_id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> deleteProductByCatId(@PathVariable Long cat_id, @PathVariable Long pro_id){
+		productServices.deleteByProductIdAndCategoryId(pro_id, cat_id);;
+		return ResponseEntity.ok().build();
+	}
 
 }

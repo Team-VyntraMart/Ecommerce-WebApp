@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Mart.RequestResponse.ApiResponse;
@@ -63,21 +66,6 @@ public class AddtoCartController {
 		
    }
 	
-	
-	@RequestMapping("/removeFromCart")
-  	public ResponseEntity<?> removeCartwithProductId(@RequestBody HashMap<String,String> removeCartRequest) {
-		try {
-			String keys[] = {"userId","cartId"};
-			if(ShoppingConfiguration.validationWithHashMap(keys, removeCartRequest)) {
-				
-			}
-			List<AddtoCart> obj = cartService.removeCartByUserId(Long.parseLong(removeCartRequest.get("cartId")), Long.parseLong(removeCartRequest.get("userId")));
-			return ResponseEntity.ok(obj);
-		}catch(Exception e) {
-				return ResponseEntity.badRequest().body(new ApiResponse(false, "Quantity not removed"));
-		}		
-   }
-	
 	@RequestMapping("/getCartProductsByUserId")
   	public ResponseEntity<?> getCartsByUserId(@RequestBody HashMap<String,String> getCartRequest) {
 		try {
@@ -89,5 +77,17 @@ public class AddtoCartController {
 		}catch(Exception e) {
 				return ResponseEntity.badRequest().body(new ApiResponse(false, "No products in cart"));
 		}	
-   }
+    }
+	
+	@RequestMapping(value = "/deleteAll/{user_id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> deleteAll(@PathVariable Long user_id){
+		cartService.deleteAllFromCart(user_id);
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/deleteAll/{user_id}/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> deleteFromCart(@PathVariable Long user_id, @PathVariable Long id){
+		cartService.deleteProductFromCart(id, user_id);
+		return ResponseEntity.ok().build();
+	}
 }
