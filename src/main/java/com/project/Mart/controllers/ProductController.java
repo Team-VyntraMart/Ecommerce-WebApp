@@ -2,7 +2,6 @@ package com.project.Mart.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -11,12 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Mart.models.Category;
 import com.project.Mart.models.Products;
 import com.project.Mart.services.ProductServicesImpl;
 
@@ -28,17 +25,13 @@ public class ProductController {
 	ProductServicesImpl productServices;
 	
 	@RequestMapping("/getAll")
-	public List<Products> getAllPRoducts(){
+	public List<Products> getAllProducts(){
 		return productServices.getAllProducts();
 	}
-	@RequestMapping("/getAllCategory")
-	public List<Category> getAllCategory(){
-		return productServices.getAllCategory();
-	}
-	@RequestMapping("/getProductsByCategory")
-	public List<Products> getProductsByCategory(@RequestBody HashMap<String,String> request){
-		long category_id = Long.parseLong(request.get("cat_id"));		
-		return productServices.getProductsByCategory(category_id);
+	
+	@GetMapping("/search/{searchText}")
+	public List<Products> getSearchedProduct(@PathVariable("searchText") String searchText){
+		return productServices.findAll(searchText);
 	}
 	
 	@GetMapping( value = "/getimage/{img_name}",produces = MediaType.IMAGE_JPEG_VALUE)
