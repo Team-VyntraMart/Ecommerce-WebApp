@@ -17,19 +17,19 @@ import java.util.Date;
 public class AddtoCart implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	long id;
+	private long id;
 	@JsonIgnore
 	
 	@OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product_id")
 	Products product;
 	//Long product_id;
-	int qty;
+	private int qty;
 	
 	@Transient
-	double price;
+	private double price;
 	
-	Long user_id;
+	private Long user_id;
 	
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

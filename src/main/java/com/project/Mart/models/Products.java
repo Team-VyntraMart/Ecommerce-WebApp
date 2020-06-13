@@ -21,11 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         allowGetters = true)
 public class Products implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	long id;
-	Long category_id;
-	String name;
-	double price;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private String name;
+	private double price;
 	
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,11 +54,5 @@ public class Products implements Serializable{
 	}
 	public void setPrice(double price) {
 		this.price = price;
-	}
-	public Long getCategory_id() {
-		return category_id;
-	}
-	public void setCategory_id(Long category_id) {
-		this.category_id = category_id;
 	}
 }

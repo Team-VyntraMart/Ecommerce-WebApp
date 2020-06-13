@@ -21,16 +21,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         allowGetters = true)
 public class CheckoutCart implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
-	String order_id,payment_type,delivery_address;
-	long user_id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long id;
+	private String order_id,payment_type,delivery_address;
+	private long user_id;
+	
 	@OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product_id")
 	Products product;	
 	//long ;
-	int qty;
-	double price;
+	private int qty;
+	private double price;
 	
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -94,6 +95,4 @@ public class CheckoutCart implements Serializable{
 	public void setProduct(Products product) {
 		this.product = product;
 	}
-	
-	
 }
