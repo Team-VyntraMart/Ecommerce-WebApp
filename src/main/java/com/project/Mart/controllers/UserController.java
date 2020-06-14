@@ -18,7 +18,7 @@ import com.project.Mart.user.UserSummary;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8015")
 public class UserController {
 
 	@Autowired

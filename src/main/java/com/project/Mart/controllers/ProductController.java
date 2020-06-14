@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import com.project.Mart.services.ProductServicesImpl;
 
 @RestController
 @RequestMapping("/api/product")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8015")
 public class ProductController {
 	@Autowired
 	ProductServicesImpl productServices;
@@ -27,6 +28,11 @@ public class ProductController {
 	@RequestMapping("/getAll")
 	public List<Products> getAllProducts(){
 		return productServices.getAllProducts();
+	}
+	
+	@RequestMapping("/{id}")
+	public Products findById(@PathVariable Long id) throws Exception{
+		return productServices.getProductsById(id);
 	}
 	
 	@GetMapping("/search/{searchText}")

@@ -16,7 +16,7 @@ import com.project.Mart.services.ProductServicesImpl;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8015")
 public class OrderController {
 	@Autowired
 	CartService cartService;

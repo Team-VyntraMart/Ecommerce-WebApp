@@ -25,7 +25,14 @@ public class Products implements Serializable{
 	private long id;
 	private String name;
 	private double price;
+	private String imageURL;
 	
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

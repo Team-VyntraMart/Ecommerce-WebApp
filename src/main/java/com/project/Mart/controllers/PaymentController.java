@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController 
 @RequestMapping("/api/payment") 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8015")
 public class PaymentController {
 
     @Autowired

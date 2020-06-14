@@ -22,7 +22,7 @@ import com.project.Mart.services.ProductServicesImpl;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:8015")
 public class AdminController {
 	
 	@Autowired
@@ -34,13 +34,14 @@ public class AdminController {
 	@PostMapping("/addProduct")
   	public ResponseEntity<?> addProduct(@RequestBody HashMap<String,String> addProductRequest) {
 		try {
-			String keys[] = {"name","price"};
+			String keys[] = {"name","price","imageURL"};
 			if(ShoppingConfiguration.validationWithHashMap(keys, addProductRequest)) {
 				
 			}
 			String name = addProductRequest.get("name");  
-			double price =  Double.parseDouble(addProductRequest.get("price")); 
-			List<Products> obj = productServices.addProducts(name,price);
+			double price =  Double.parseDouble(addProductRequest.get("price"));
+			String imageURL = addProductRequest.get("imageURL");
+			List<Products> obj = productServices.addProducts(name,price,imageURL);
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,15 +52,17 @@ public class AdminController {
 	@RequestMapping(value="/updateProduct/{id}", method=RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
   	public ResponseEntity<?> updateProduct(@RequestBody HashMap<String,String> updateProductRequest, @PathVariable Long id) {
 		try {
-			String keys[] = {"name","price"};
+			String keys[] = {"name","price","imageURL"};
 			if(ShoppingConfiguration.validationWithHashMap(keys, updateProductRequest)) {
 				
 			}
 			String name = updateProductRequest.get("name");  
-			double price =  Double.parseDouble(updateProductRequest.get("price")); 
+			double price =  Double.parseDouble(updateProductRequest.get("price"));
+			String imageURL = updateProductRequest.get("imageURL");
 			Products obj = productServices.getProductsById(id);
 			obj.setName(name);
 			obj.setPrice(price);
+			obj.setImageURL(imageURL);
 			productRepo.saveAndFlush(obj);
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {

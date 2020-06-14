@@ -30,10 +30,11 @@ public class ProductServicesImpl implements ProductServices{
 	}
 	
 	@Override
-	public List<Products> addProducts(String name,double price) throws Exception{
+	public List<Products> addProducts(String name,double price,String imageURL) throws Exception{
 			Products obj = new Products();
 			obj.setName(name);
 			obj.setPrice(price);
+			obj.setImageURL(imageURL);
 			productRepo.saveAndFlush(obj);		
 			return null;
 	}
