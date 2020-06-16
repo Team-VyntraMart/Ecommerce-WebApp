@@ -25,13 +25,13 @@ public class Products implements Serializable{
 	private long id;
 	private String name;
 	private double price;
-	private String imageURL;
+	private String image;
 	
-	public String getImageURL() {
-		return imageURL;
+	public String getImage() {
+		return image;
 	}
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+	public void setImage(String image) {
+		this.image = image;
 	}
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

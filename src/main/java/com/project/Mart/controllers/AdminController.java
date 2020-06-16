@@ -34,14 +34,14 @@ public class AdminController {
 	@PostMapping("/addProduct")
   	public ResponseEntity<?> addProduct(@RequestBody HashMap<String,String> addProductRequest) {
 		try {
-			String keys[] = {"name","price","imageURL"};
+			String keys[] = {"name","price","image"};
 			if(ShoppingConfiguration.validationWithHashMap(keys, addProductRequest)) {
 				
 			}
 			String name = addProductRequest.get("name");  
 			double price =  Double.parseDouble(addProductRequest.get("price"));
-			String imageURL = addProductRequest.get("imageURL");
-			List<Products> obj = productServices.addProducts(name,price,imageURL);
+			String image = addProductRequest.get("image");
+			List<Products> obj = productServices.addProducts(name,price,image);
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,17 +52,17 @@ public class AdminController {
 	@RequestMapping(value="/updateProduct/{id}", method=RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
   	public ResponseEntity<?> updateProduct(@RequestBody HashMap<String,String> updateProductRequest, @PathVariable Long id) {
 		try {
-			String keys[] = {"name","price","imageURL"};
+			String keys[] = {"name","price","image"};
 			if(ShoppingConfiguration.validationWithHashMap(keys, updateProductRequest)) {
 				
 			}
 			String name = updateProductRequest.get("name");  
 			double price =  Double.parseDouble(updateProductRequest.get("price"));
-			String imageURL = updateProductRequest.get("imageURL");
+			String image = updateProductRequest.get("image");
 			Products obj = productServices.getProductsById(id);
 			obj.setName(name);
 			obj.setPrice(price);
-			obj.setImageURL(imageURL);
+			obj.setImage(image);
 			productRepo.saveAndFlush(obj);
 			return ResponseEntity.ok(obj);
 		} catch (Exception e) {
